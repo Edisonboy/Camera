@@ -1,0 +1,76 @@
+<div class="perm-container">
+<#--图片处理权限-->
+<#assign imgPerms="/common/v_image_area_select.do,/common/o_image_cut.do,/common/o_upload_image.do"/>
+<#--默认有的权限，比如后台首页-->
+<input type="hidden" name="perms" value="/index.do,/top.do,/main.do,/left.do,/right.do"/>
+
+<div class="perm-layout-1">
+<label><input value="/personal/" type="checkbox" name="perms"/><@s.m "cmsPersonal.function"/></label>
+</div>
+
+<div class="perm-layout-1">
+<label><input value="/cargo/v_list.do" type="checkbox" name="perms"/>货柜管理</label>
+	<div class="perm-layout-2">
+	<label><input value="/cargo/v_add.do,/cargo/v_check_cargoName.do,/cargo/o_save.do" type="checkbox" name="perms"/><@s.m "global.add"/></label>
+	<label><input value="/cargo/v_edit.do,/cargo/o_update.do" type="checkbox" name="perms"/>修改装载时间</label>
+	<label><input value="/cargo/v_finshCargo.do" type="checkbox" name="perms"/>修改装载完成状态</label>
+	<label><input value="/cargo/v_uploadXLS.do,/cargo/o_upload.do,/cargo/g_cargo_progress.do" type="checkbox" name="perms"/>上传装载文件</label>	
+	<label><input value="/plant/v_list.do" type="checkbox" name="perms"/>查看货柜详情</label>	
+	<label><input value="/plant/o_updateImg.do,/plant/v_list.do,${imgPerms}" type="checkbox" name="perms"/>上传货柜图片</label>	
+	</div>
+</div>
+
+
+
+
+<div class="perm-layout-1">
+<label><input value="/frame/user" type="checkbox" name="perms"/><@s.m "cms.function.user"/></label>
+	<div class="perm-layout-2">
+	<label><input value="/admin_global/" type="checkbox" name="perms"/><@s.m "cmsAdminGlobal.function"/></label>
+	<label><input value="/role/" type="checkbox" name="perms"/><@s.m "cmsRole.function"/></label>
+	<label><input value="/log/" type="checkbox" name="perms"/><@s.m "cmsLog.function"/></label>
+	</div>
+</div>
+
+
+
+</div>
+<script type="text/javascript">
+$(function() {
+	$(".perm-container input[type=checkbox]").bind("click",function() {
+		parentCheck(this);
+		
+	});
+});
+function parentCheck(chk) {
+	var obj = $(chk).parent().parent().parent().parent().parent();
+	var shouldClickChild = true;
+	while(obj && obj.attr("class").indexOf("perm-container")==-1) {
+		if(chk.checked) {
+			$(obj.children()[0]).children().children().children().attr("checked","checked");
+			$(obj.children()[0]).children().children().attr("class","checked");
+		}
+		shouldClickChild = false;
+		obj = obj.parent();
+	}
+	if(shouldClickChild)
+	{
+		childCheck(chk);
+		}
+}
+function childCheck(chk) {
+	/* $(chk).parent().parent().parent().next().children().find("input[type=checkbox]").each(function(){
+			this.checked=chk.checked
+		}); */
+		$(chk).parent().parent().parent().next().children().find("input[type=checkbox]").each(function(){
+			if(chk.checked){
+				$(this).attr("checked","checked");
+				$(this).parent().attr("class","checked");
+			}else{
+			$(this).removeAttr("checked");
+				$(this).parent().removeAttr("class");
+			
+			}
+		});
+}
+</script>

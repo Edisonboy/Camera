@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dgut.main.entity">
+	<class name="InstallationRecord" table="installation_record">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="recordNo" type="java.lang.Integer" column="recordNo"><generator class="native"/></id>
+		<property name="userNo" column="userNo" type="string" length="255"/>
+		<property name="userName" column="userName" type="string"  length="255"/>
+		<property name="address" column="address" type="string" length="255"/>
+		<property name="cflag" column="cflag" type="string" length="255"/>
+		<property name="meterNo" column="meterNo" type="string" length="255"/>
+		<property name="type" column="type" type="string" length="255"/>
+		<property name="tableNo" column="tableNo" type="string" length="255"/>
+		<property name="pedestal" column="pedestal" type="string" length="255"/>
+		<property name="sealposition" column="sealposition" type="string" length="255"/>
+		<property name="sealNo" column="sealNo" type="string" length="255"/>
+		<property name="caseNo" column="caseNo" type="string" length="255"/>
+		<property name="staff" column="staff" type="string" length="255"/>
+		<property name="date" column="date" type="timestamp"/>
+		<property name="signature" column="signature" type="string" length="255"/>
+		<property name="flag" column="flag" type="boolean"/>
+		<property name="worksheetNo" column="worksheetNo" type="string" length="30"/>
+	</class>
+</hibernate-mapping>
+
+
+	

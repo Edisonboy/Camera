@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="utf-8" />
+<title>东丽装柜系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<#include "/admin_sys/head.html"/>
+ 
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function optBackUp() {
+	
+	var f = getTableForm();
+	f.action="o_backup.do";
+	f.submit();
+}
+</script>
+</head>
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<!-- BEGIN HEADER -->
+	<#include "/admin_sys/top.html"/>
+	<div class="clearfix"></div>
+	<div class="page-container">
+		<#assign tb_14=true />
+			<#assign tb_14_ul=true  />
+			<#assign tb_14_li_1=true />
+			<#assign tb_14_arrow=true />
+		<#include "/admin_sys/left.html"/>
+		<div class="page-content-wrapper">
+			<div style="min-height:1022px" class="page-content">
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="${base}/admin/data/v_list.do">数据库备份</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>数据库列表</span></li>
+					</ul>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>数据库备份列表
+								</div>
+								<div class="actions">
+									<a href="o_backup.do" class="btn btn-default btn-sm" onclick="if(!confirm('确定开始备份？')) {return false;}"> <i
+										class="fa fa-database"></i>备份</a> 
+								</div>
+							</div>
+
+							<div class="portlet-body">
+									<div class="table-scrollable">
+										<table
+											class="table table-bordered table-hover dataTable ">
+											<thead>
+												<tr>
+													<th style="text-align: center;" >表名</th>
+													<th style="text-align: center;" >操作选项</th>			
+												</tr>
+											</thead>
+											<tbody>
+												<#list tables as table>
+												<tr>
+													<td  >${table}</td>
+													<td style="text-align: center;" ><a  href="v_listfields.do?tablename=${table!}" class="pn-opt"><@s.m "db.viewtable"/></a></td>
+												</tr>
+
+												</#list>
+											</tbody>
+										</table>
+									</div>
+							</div>
+
+
+						</div>
+						<!-- END SAMPLE TABLE PORTLET-->
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- BEGIN CONTENT -->
+
+		<#include "/common/bootAlert_message.html"/>
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

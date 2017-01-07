@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.5
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>东丽装柜系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<#include "/admin_sys/head.html"/>
+<link href="${base}/res/assets/pages/css/error.min.css" rel="stylesheet" type="text/css">
+
+</head>
+<!-- END HEAD -->
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<!-- BEGIN HEADER -->
+	<#include "/admin_sys/top.html"/>
+	<!-- END HEADER -->
+	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+	<div class="clearfix"></div>
+	<!-- END HEADER & CONTENT DIVIDER -->
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<#include "/admin_sys/left.html"/>
+		<!-- END SIDEBAR -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div style="min-height:1022px" class="page-content">
+				<!-- page bar start -->
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="${base}/index.do">首页</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>错误页面</span></li>
+					</ul>
+				</div>
+			<div class="row">
+                        <div class="col-md-12 page-500">
+                            <div class=" number font-red"> 出错啦 </div>
+                            <div class=" details">
+                                <h3>错误内容</h3>
+                                <p> 
+                                    <br>
+                                  <#list errors as error>
+									${error}<br/>
+									</#list>  
+                                   </p>
+                                <p>
+                                    <a href="#" onClick="javascript :history.back(-1);" class="btn red btn-outline"> 返回上一页 </a>
+                                    <a href="${base}/admin/index.do" class="btn red btn-outline"> 去首页 </a>
+                                    <br> </p>
+                            </div>
+                        </div>
+                    </div>				
+
+			</div>
+		</div>
+		<!-- BEGIN CONTENT -->
+		
+<#include "/common/bootAlert_message.html"/>
+		<!-- END CONTENT -->
+
+		<script type="text/javascript">
+			function g(o) {
+				return document.getElementById(o);
+			}
+			function HoverLi(m, n, counter) {
+				for ( var i = 1; i <= counter; i++) {
+					g('tb_' + m + i).className = 'normal';
+				}
+				g('tb_' + m + n).className = 'current';
+			}
+			$(function() {
+				$("#tb_11").addClass("start active open");
+				$("#tb_11 ul").css('display', 'block');
+				$("#tb_11 ul li:nth-child(1)").addClass("start active open");
+				$("#tb_11 span[class='arrow']").addClass("open");
+			});
+		</script>
+
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

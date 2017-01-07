@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.5
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>工作空间管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<#include "/admin_sys/head.html"/>
+ 
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function optBackUp() {
+	
+	var f = getTableForm();
+	f.action="o_backup.do";
+	f.submit();
+}
+</script>
+</head>
+<!-- END HEAD -->
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<!-- BEGIN HEADER -->
+	<#include "/admin_sys/top.html"/>
+	<!-- END HEADER -->
+	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+	<div class="clearfix"></div>
+	<!-- END HEADER & CONTENT DIVIDER -->
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<#assign tb_14=true />
+			<#assign tb_14_ul=true  />
+			<#assign tb_14_li_1=true />
+			<#assign tb_14_arrow=true />
+		<#include "/admin_sys/left.html"/>
+		<!-- END SIDEBAR -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div style="min-height:1022px" class="page-content">
+				<!-- page bar start -->
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="${base}/admin/data/v_list.do">数据库</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>数据库表字段</span></li>
+					</ul>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>数据库表字段列表
+								</div>
+								<div class="actions">
+									<a href="v_list.do" class="btn btn-default btn-sm" > <i
+										class="fa fa-database"></i>返回</a> 
+								</div>
+							</div>
+
+							<div class="portlet-body">
+									<div class="table-scrollable">
+										<table
+											class="table table-bordered table-hover ">
+											<thead>
+												<tr>
+													<th style="text-align: center;" >字段名</th>			
+													<th style="text-align: center;" >字段类型</th>		
+													<th style="text-align: center;" >允许为空</th>	
+													<th style="text-align: center;" >默认值</th>		
+												</tr>
+											</thead>
+											<tbody>
+												<#list list as field>
+												<tr>
+													<td  >${field.name}</td>
+													<td  >${field.fieldType!}</td>
+													<td  >${field.nullable!}</td>
+													<td style="text-align: center;" >${field.fieldDefault!}</td>
+												</tr>
+
+												</#list>
+											</tbody>
+										</table>
+									</div>
+							</div>
+
+
+						</div>
+						<!-- END SAMPLE TABLE PORTLET-->
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- BEGIN CONTENT -->
+
+		<#include "/common/bootAlert_message.html"/>
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

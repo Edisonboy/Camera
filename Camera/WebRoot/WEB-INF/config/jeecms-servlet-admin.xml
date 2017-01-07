@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	default-lazy-init="true"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<context:component-scan base-package="com.dgut.main.action" />
+	
+	<!-- 动态加载资源文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="-1"/>
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/languages/jeecore_admin/messages</value>
+				<value>/WEB-INF/languages/jeecms_admin/messages</value>
+				<value>/WEB-INF/languages/jeecms_tpl/messages</value>
+				<value>/WEB-INF/languages/fck/messages</value>
+				<value>/WEB-INF/languages/DefaultValidatorMessages</value>
+			</list>
+		</property>
+	</bean>
+	
+    
+	<!-- 上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<!-- 	<property name="defaultEncoding" value="gbk"/> 默认编码 (ISO-8859-1)  
+    <property name="maxInMemorySize" value="10240"/> 最大内存大小 (10240)  
+    <property name="uploadTempDir" value="/upload/"/> 上传后的目录名 (WebUtils#TEMP_DIR_CONTEXT_ATTRIBUTE)  
+    <property name="maxUploadSize" value="-1"/> 最大文件大小，-1为无限止(-1)   -->
+	</bean>
+	<!--
+		<bean id="multipartResolver" class="com.jeecms.common.web.cos.CosMultipartResolver"/>
+		-->
+		
+		  <!--通过注解，把一个URL映射到Controller类的方法上-->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+		 <!-- 日期格式转换 --> 
+		 <bean class=" com.dgut.common.web.springmvc.BindingInitializer">
+           <property name="validator" ref="validator"/>
+         </bean>
+		</property>
+		<property name="messageConverters">
+	       <list>
+	           <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+	           <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+	           <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		       		<property name="supportedMediaTypes">
+		           		<list>
+		           			<value>text/plain;charset=UTF-8</value>
+		           		</list>
+	           		</property>
+           	   </bean>
+	           <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+	           <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+	           <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+	           <bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"/>
+	       </list>
+   		</property>
+	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+         <!-- 这里配置将使用上面国际化配置的messageSource -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+	
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/config/firewall.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- <mvc:annotation-driven />   默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter    
+    -->  
+    <!-- 拦截器的配置  自定义拦截器堆   处理在类级别上的@RequestMapping注解  通过注解，把一个URL映射到Controller类上 DefaultAnnotationHandlerMapping  
+    	通过注解，把一个URL映射到Controller类上
+    -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="adminContextInterceptor"/>
+			<!-- 	<ref bean="adminLocaleIntercept"/> -->
+				<ref bean="fireWallInterceptor"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="adminContextInterceptor" class="com.dgut.main.web.AdminContextInterceptor">
+		<property name="auth" value="true"/>
+		<property name="loginUrl" value="/admin/login.do"/>
+		<property name="returnUrl" value="/admin/index.do"/>
+		<property name="excludeUrls">
+			<list>
+				<value>/login.do</value>
+				<value>/logout.do</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="adminLocaleIntercept" class="com.dgut.main.web.AdminLocaleInterceptor"/>
+	
+	<bean id="fireWallInterceptor" class="com.dgut.main.web.FireWallInterceptor">
+	</bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="clientlanguage"/>
+		<property name="cookieMaxAge" value="-1"/>
+	</bean>
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.bind.MissingServletRequestParameterException">/error/requiredParameter</prop>
+				<prop key="org.springframework.beans.TypeMismatchException">/error/mismatchParameter</prop>
+				<prop key="org.springframework.web.bind.ServletRequestBindingException">/error/bindException</prop>
+				<prop key="org.springframework.dao.DataIntegrityViolationException">/error/integrityViolation</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="freemarkerViewResolver" class="com.dgut.common.web.springmvc.RichFreeMarkerViewResolver">
+		<property name="prefix" value="/admin_sys/"/>
+		<property name="suffix" value=".html"/>
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+		<property name="exposeRequestAttributes" value="false"/>
+		<property name="exposeSessionAttributes" value="false"/>
+		<property name="exposeSpringMacroHelpers" value="true"/>
+	</bean>
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF"/>
+		<property name="freemarkerVariables">
+			<map>
+				<!--在FCK编辑器中需要用到appBase，以确定connector路径。-->
+				<entry key="appBase" value="/jeeadmin/jeecms"/>
+				<!--后台管理权限控制-->
+				<entry key="cms_perm" value-ref="cms_perm"/>
+				<entry key="text_cut" value-ref="text_cut"/>
+				<entry key="html_cut" value-ref="html_cut"/>
+			</map>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">0.######</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="auto_import">/ftl/pony/index.ftl as p,/ftl/spring.ftl as s</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<context:annotation-config/>
+	
+
+</beans>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="-1"/>
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/languages/jeecms_front/messages</value>
+				<value>/WEB-INF/languages/jeecms_tpl/messages</value>
+				<value>/WEB-INF/languages/jeecore_admin/messages</value>
+				<value>/WEB-INF/languages/fck/messages</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 处理上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.dgut.common.web.springmvc.BindingInitializer"/>
+		</property>
+	</bean>
+	
+	 <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="frontContextInterceptor"/>
+			<!-- 	<ref bean="frontLocaleInterceptor"/> -->
+			</list>
+		</property>
+	</bean>
+	<bean id="frontContextInterceptor" class="com.dgut.main.web.FrontContextInterceptor"/>
+	<!-- <bean id="frontLocaleInterceptor" class="com.dgut.cms.web.FrontLocaleInterceptor"/>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="clientlanguage"/>
+		<property name="cookieMaxAge" value="-1"/>
+	</bean>  -->
+
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.bind.MissingServletRequestParameterException">/WEB-INF/error/requiredParameter.html</prop>
+				<prop key="org.springframework.beans.TypeMismatchException">/WEB-INF/error/mismatchParameter.html</prop>
+				<prop key="org.springframework.web.bind.ServletRequestBindingException">/WEB-INF/error/bindException.html</prop>
+			</props>
+		</property>
+	</bean>
+
+	<context:annotation-config/>
+	
+	
+
+</beans>

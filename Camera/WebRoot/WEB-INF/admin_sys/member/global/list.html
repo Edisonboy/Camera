@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.5
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>工作空间管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<#include "/admin_sys/head.html"/>
+
+
+  <link href="${base}/res/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+  <link href="${base}/res/assets/pages/css/orso.css" rel="stylesheet" type="text/css" />
+ 
+ 
+<script type="text/javascript">
+	function getTableForm() {
+		return document.getElementById('tableForm');
+	}
+	
+	function getUsers(adminNo){
+		alert(adminNo);
+	}
+</script>
+
+<script>
+	$(document).ready(function(){
+		$(".box").orso({
+			boxl:".box_l",//左边大盒子
+			boxr:".box_r",//右边大盒子
+			boxlrX:"li",//移动小盒子
+			boxon:"on",//点击添加属性
+			idclass:true,//添加的属性是否为class//true=class; false=id;
+			boxlan:"#left",//单个向左移动按钮
+			boxran:"#right",//单个向右移动按钮
+			boxtan:"#top",//单个向上移动按钮
+			boxban:"#bottom",//单个向下移动按钮
+			boxalllan:"#allleft",//批量向左移动按钮
+			boxallran:"#allright",//批量向右移动按钮
+			boxalltan:"#alltop",//移动第一个按钮
+			boxallban:"#allbottom"//移动最后一个按钮
+		});
+	});
+</script>
+</head>
+<!-- END HEAD -->
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<#include "/admin_sys/top.html"/>
+	<div class="clearfix"></div>
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<#assign tb_13=true />
+			<#assign tb_13_ul=true  />
+			<#assign tb_13_li_2=true />
+			<#assign tb_13_arrow=true />
+		<#include "/admin_sys/left.html"/>
+		<!-- END SIDEBAR -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div style="min-height:1022px" class="page-content">
+				<!-- page bar start -->
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="v_list.do">上传用户管理</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>列表</span></li>
+					</ul>
+				</div>
+
+				<div class="row ">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE FORM PORTLET-->
+						<div class="portlet box red bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>搜索
+								</div>
+								<div class="tools">
+									<a class="collapse" href="" data-original-title="" title="">
+									</a> <a class="remove" href="" data-original-title="" title="">
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body">
+								<form action="v_list.do" method="post" class="form-inline" >
+									<div>
+										<div class="form-group">
+                                        	<input type="text" class="form-control" id="username" placeholder="用户名" name="username" value="${username!}">
+                                        </div>
+                                        <div class="form-group">
+                                        	<input type="text" class="form-control" id="realname" placeholder="姓名" name="realname" value="${realname!}">
+                                        </div>
+										 <input class="btn red" type="submit" value="查询"/>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>用户列表
+								</div>
+								<div class="actions">
+									<a href="v_add.do" class="btn btn-default btn-sm"> <i class="fa fa-plus"></i>添加</a> 
+								</div>
+							</div>
+
+							<div class="portlet-body">
+								<form id="tableForm" method="post">
+									<input type="hidden" name="pageNo" value="${pageNo!}" />
+									<div class="table-scrollable">
+										<table
+											class="table table-bordered table-hover dataTable table-checkable ">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>用户名</th>			
+													<th>最后登录</th>
+													<th>登录次数</th>
+													<th>禁用</th>
+													<th>操作选项</th>
+												</tr>
+											</thead>
+											<tbody>
+												<#list pagination.list as cmsUser>
+												<tr>
+													<td>${cmsUser.id}</td>
+													<td>${cmsUser.username}<#if cmsUser.realname??> (${cmsUser.realname})</#if></td>
+													<td>${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</td>
+													<td>${cmsUser.loginCount}</td>
+
+													<td><#if cmsUser.disabled><span style="color:red"><@s.m "global.true"/></span><#else><@s.m "global.false"/></#if></td>
+													<td>
+														<div class="btn-group">
+															<button class="btn btn-xs blue dropdown-toggle"
+																type="button" data-toggle="dropdown"
+																aria-expanded="false">
+																选择操作 <i class="fa fa-angle-down"></i>
+															</button>
+															<ul class="dropdown-menu pull-right" role="menu">
+																<@cms_perm url="/member_global/v_edit.do"> 
+																<li>
+																	<a href="v_edit.do?id=${cmsUser.id}"><i class="icon-docs"></i>编辑 </a>
+																</li> 
+																</@cms_perm>
+																<@cms_perm url="/member_global/o_delete.do"> 
+																<li>
+																	<a href="v_delete.do?id=${cmsUser.id}&pageNo=${pageNo!}" onclick="if(!confirm('确定删除？')) {return false;}">
+																	<i class="icon-tag"></i>删除 </a>
+																</li> 
+																</@cms_perm>
+																<@cms_perm url="/member_global/o_assign.do"> 
+																<li>
+																	<a data-toggle="modal" data-target="#myModal" onclick="getUsers(${cmsUser.id})">
+																		<i class="icon-tag"></i>分配 </a></li> 
+																</@cms_perm>
+
+															</ul>
+														</div></td>
+												</tr>
+
+												</#list>
+											</tbody>
+										</table>
+									</div>
+									<@p.pagination value=pagination listAction="v_list.do";cmsUser,i,has_next>
+									</@p.pagination>
+								</form>
+							</div>
+							
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							    <div class="modal-dialog" style="width:770px;height:800px">
+							        <div class="modal-content">
+							            <div class="modal-header">
+							                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							                <h4 class="modal-title" id="myModalLabel">用户分配</h4>
+							            </div>
+							            <div class="modal-body">
+								            <div class="boxs">
+												<div class="box_l">
+													<li>测试移动1</li>
+													<li>测试移动2</li>
+													<li>测试移动3</li>
+													<li>测试移动4</li>
+													<li>测试移动5</li>
+													<li>测试移动6</li>
+													<li>测试移动7</li>
+													
+												</div>
+												<div class="box_m">
+													<!-- <a href="javascript:" id="top">上移</a> -->
+													<a href="javascript:" id="left">向左</a>
+													<a href="javascript:" id="right">向右</a>
+													<!-- <a href="javascript:" id="bottom">下移</a> -->
+												</div>
+												<div class="box_r">
+													<li>测试移动8</li>
+													<li>测试移动9</li> 
+													<li>测试移动10</li>
+													<li>测试移动11</li>
+												</div>
+											</div>
+							            </div>
+							            <div class="modal-footer">
+						            		<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+						                	<button type="button" class="btn btn-primary">取消</button>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<#include "/common/bootAlert_message.html"/>
+		<!-- END CONTENT -->
+		<script src="${base}/res/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+		<script src="${base}/res/assets/js/orso.js" type="text/javascript"></script>
+			
+        <script src="${base}/res/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

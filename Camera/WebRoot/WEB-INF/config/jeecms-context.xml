@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+	<!-- 国际化和'热'加载文件(不用重启应用). -->
+	<bean id="tplMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="0"/>
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/languages/jeecms_tpl/messages</value>
+			</list>
+		</property>
+	</bean>
+	<!--标签-->
+	
+	<!--后台权限标签-->
+	<bean id="cms_perm" class="com.dgut.main.web.PermistionDirective"/>
+	
+	<!--MANAGER-->
+	<bean id="adminMng" class="com.dgut.main.manager.impl.AdminMngImpl"/>
+	<bean id="adminLogMng" class="com.dgut.main.manager.impl.AdminLogMngImpl"/>	
+	<bean id="adminAuthenMng" class="com.dgut.main.manager.impl.AuthenticationMngImpl"/>
+	<bean id="InstallationRecordMng" class="com.dgut.main.manager.impl.InstallationRecordMngImpl"/>
+	<bean id="WorkSheetMng" class="com.dgut.main.manager.impl.WorkSheetMngImpl"/>
+	<bean id="roleMng" class="com.dgut.main.manager.impl.RoleMngImpl"/>
+	<!-- <bean id="jxDataBackMng" class="com.dgut.main.manager.impl.JXDataBackMngImpl"/> -->
+	<bean id="jxDataBackMng" class="com.dgut.main.manager.impl.JXDataBackMngImpl"/>
+	
+	<bean id="memberMng" class="com.dgut.member.manager.impl.MemberMngImpl"/>
+	<bean id="memberLogMng" class="com.dgut.member.manager.impl.MemberLogMngImpl"/>
+	<bean id="memberAuthenMng" class="com.dgut.member.manager.impl.MemberAuthenticationMngImpl"/>
+	<bean id="MemberPhotoMng" class="com.dgut.member.manager.impl.MemberPhotoMngImpl"/>
+	<bean id="RecordMng" class="com.dgut.member.manager.impl.RecordMngImpl"/>
+	
+	<!--DAO-->
+	<bean id="adminDao" class="com.dgut.main.dao.impl.AdminDaoImpl"/>
+	<bean id="adminLogDao" class="com.dgut.main.dao.impl.AdminLogDaoImpl"/>
+	
+	<bean id="adminAuthenDao" class="com.dgut.main.dao.impl.AuthenticationDaoImpl"/>
+	<bean id="InstallationRecordDao" class="com.dgut.main.dao.impl.InstallationRecordDaoImpl"/>
+	<bean id="WorkSheetDao" class="com.dgut.main.dao.impl.WorkSheetDaoImpl"/>
+	<bean id="roleDao" class="com.dgut.main.dao.impl.RoleDaoImpl"/>
+	<!-- <bean id="jxDataBackDao" class="com.dgut.main.dao.impl.JXDataBackDaoImpl"/> -->
+	<bean id="jxDataBackDao" class="com.dgut.main.dao.impl.JXDataBackDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	
+	<bean id="memberDao" class="com.dgut.member.dao.impl.MemberDaoImpl"/>
+	<bean id="memberLogDao" class="com.dgut.member.dao.impl.MemberLogDaoImpl"/>
+	<bean id="memberAuthenDao" class="com.dgut.member.dao.impl.MemberAuthenticationDaoImpl"/>
+	
+	<bean id="memberPhotoDao" class="com.dgut.member.dao.impl.MemberPhotoDaoImpl"/>
+	<bean id="RecordDao" class="com.dgut.member.dao.impl.RecordDaoImpl"/>
+	
+	<!-- 
+	<context:component-scan base-package="com.dgut.main.manager.impl"></context:component-scan>
+	<context:component-scan base-package="com.dgut.main.dao.impl"></context:component-scan>
+	
+	<context:component-scan base-package="com.dgut.member.manager.impl"></context:component-scan>
+	<context:component-scan base-package="com.dgut.member.dao.impl"></context:component-scan>
+	 -->
+	
+	
+	
+</beans>

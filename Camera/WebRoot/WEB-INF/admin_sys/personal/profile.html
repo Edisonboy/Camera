@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.5
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>${title!''}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<#include "/admin_sys/head.html"/>
+<link href="${base}/res/assets/pages/css/invoice-2.min.css"
+	rel="stylesheet" type="text/css" />
+
+</head>
+<!-- END HEAD -->
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<!-- BEGIN HEADER -->
+	<#include "/admin_sys/top.html"/>
+	<!-- END HEADER -->
+	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+	<div class="clearfix"></div>
+	<!-- END HEADER & CONTENT DIVIDER -->
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<#assign tb_11=true />
+			<#assign tb_11_ul=true  />
+			<#assign tb_11_li_2=true />
+			<#assign tb_11_arrow=true />
+		<#include "/admin_sys/left.html"/>
+		<!-- END SIDEBAR -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div style="min-height:1022px" class="page-content">
+				<!-- page bar start -->
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="${base}/admin/index.do">首页</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>个人资料</span></li>
+					</ul>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-gift"></i>个人资料
+								</div>
+							</div>
+							<div class="portlet-body form"  style="display: block;">
+								<!-- BEGIN FORM-->
+								<form action="o_profile.do" method="post" id="form_sample_1"
+									novalidate="novalidate"
+									class="form-horizontal form-row-seperated">
+									<div class="form-body">
+										<div class="alert alert-danger display-hide">
+											<button class="close" data-close="alert"></button>
+											请仔细检查输入的个人信息！
+										</div>
+											<#if errors??>
+										<div class="alert alert-danger"  role="alert"">
+											<button class="close" data-close="alert"></button>
+											<#list errors as error>
+												${error}<br/>
+											</#list>
+										</div>
+										
+										</#if>
+										
+										<div class="form-group">
+											<label class="control-label col-md-3">用户名&nbsp;</label>
+											<div class="col-md-9">
+												<span class="help-block">${user.username!?html} </span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3">原密码<span
+												class="required" aria-required="true"> * </span> </label>
+
+											<div class="col-md-9">
+												<input type="password" name="origPwd" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3">新密码&nbsp;</label>
+											<div class="col-md-9">
+												<input type="password" placeholder="不修改请留空 " name="newPwd" id="newPwd" class="form-control">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3">确认密码&nbsp;</label>
+											<div class="col-md-9">
+												<input type="password" placeholder="不修改请留空 " name="newPwdAgain" class="form-control"> 
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3"> 真实姓名<span
+												class="required" aria-required="true"> * </span> </label>
+											<div class="col-md-9">
+												<input type="text" name="realname" value="${user.realname}"
+													class="form-control">
+											</div>
+										</div>
+
+									</div>
+									<div class="form-actions">
+										<div class="row">
+											<div class="col-md-offset-5 col-md-6">
+												<button type="submit" class="btn  btn-primary">
+													<i class="fa fa-check"></i> 提交
+												</button>
+												<button type="reset" class="btn btn-default">
+													<i class="fa fa-pencil"></i> 重置
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+								<!-- END FORM-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- BEGIN CONTENT -->
+		
+<#include "/common/bootAlert_message.html"/>
+		<!-- END CONTENT -->
+
+		<script
+			src="${base}/res/assets/global/plugins/jquery-validation/js/jquery.validate.min.js"
+			type="text/javascript"></script>
+			<script src="${base}/res/assets/global/plugins/jquery-validation/js/localization/messages_zh.js"></script>
+		<script
+			src="${base}/res/assets/global/plugins/jquery-validation/js/additional-methods.min.js"
+			type="text/javascript"></script>
+		<script src="${base}/res/assets/js/profile-validation.js"
+			type="text/javascript"></script>
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

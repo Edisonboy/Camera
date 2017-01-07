@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+<meta charset="utf-8" />
+<title>Edison</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<#include "/admin_sys/head.html"/>
+
+
+   
+	<!-- <link href="${base}/res/assets/global/plugins/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/> -->
+	<link href="${base}/res/assets/global/plugins/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${base}/res/assets/global/plugins/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${base}/res/assets/global/plugins/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="${base}/res/assets/global/plugins/media/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${base}/res/assets/global/plugins/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<!-- <link href="${base}/res/assets/global/plugins/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/> -->
+	<link href="${base}/res/assets/global/plugins/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="${base}/res/assets/global/plugins/media/css/jquery.fancybox.css" rel="stylesheet" />
+	<link href="${base}/res/assets/global/plugins/media/css/chosen.css" rel="stylesheet" type="text/css"/>
+	
+	
+	<script src="${base}/res/assets/global/plugins/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+	<script src="${base}/res/assets/global/plugins/media/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery.blockui.min.js" type="text/javascript"></script>  
+	<script src="${base}/res/assets/global/plugins/media/js/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
+	<script src="${base}/res/assets/global/plugins/media/js/jquery.fancybox.pack.js"></script>   
+	<script type="text/javascript" src="${base}/res/assets/global/plugins/media/js/chosen.jquery.min.js"></script>
+	<!-- <script src="${base}/res/assets/global/plugins/media/js/app.js"></script>   
+	<script src="${base}/res/assets/global/plugins/media/js/gallery.js"></script>   -->
+	
+	
+	
+	
+</head>
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<#include "/admin_sys/top.html"/>
+	<div class="clearfix"></div>
+	<div class="page-container">
+		<#assign tb_12=true  />
+		<#assign tb_12_ul=true />
+		<#assign tb_12_li_2=true />
+		<#include "/admin_sys/left.html"/>
+		<div class="page-content-wrapper">
+			<div style="min-height:1022px" class="page-content">
+				<div class="page-bar">
+					<ul class="page-breadcrumb">
+						<li><a href="v_list.do">用户管理</a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>列表</span></li>
+					</ul>
+				</div>
+				<div class="row ">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE FORM PORTLET-->
+						<div class="portlet box red bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>导入数据
+								</div>
+								<div class="tools">
+									<a class="collapse" href="" data-original-title="" title="">
+									</a> <a class="remove" href="" data-original-title="" title="">
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body" style="height:600px">
+								<div class="row-fluid">
+									<div class="span4">
+										<h4>Browsing Category 1</h4>
+									</div>
+									<div class="span8">
+										<div class="pull-right">
+											
+											
+											<div class="clearfix space5"></div>
+											<a href="" class="btn pull-right green"><i class="icon-plus"></i> Upload</a>
+										</div>
+									</div>
+								</div>
+								
+								<hr class="clearfix" />
+								<div class="row-fluid">
+									<#list photoList as photo >
+									<div class="span3">
+										<div class="item">
+											<a class="fancybox-button" data-rel="fancybox-button" title="Photo" href="${photo.maxUrl}">
+												<div class="zoom">
+													<img src="${photo.minUrl}" alt="Photo" style="width:100%;height:100%"/>                    
+													<div class="zoom-icon"></div>
+												</div>
+											</a>
+											<div class="details">
+												<a href="${base}/admin/download.do?photoId=${photo.id}" class="icon"><i class="icon-download"></i></a>
+												<a href="#" class="icon"><i class="icon-remove"></i></a>    
+											</div>
+										</div>
+									</div>
+									</#list>
+								
+								
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<#include "/common/bootAlert_message.html"/>
+			
+	</div>
+	
+
+</body>
+
+</html>

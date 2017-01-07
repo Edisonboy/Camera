@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/jeecms_sys/head.html"/>
+<script type="text/javascript">
+$(function() {
+	$("#jvForm").validate();
+});
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>:  <@s.m "cmsAdminGlobal.function"/> - <@s.m "global.edit"/></div>
+	<form class="ropt">
+		<input type="button" value="<@s.m "global.backToList"/>" onclick="history.back();" class="return-button"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<@p.form id="jvForm" action="o_update.do" labelWidth="12">
+<@p.td width="50" colspan="1" label="cmsUser.username">${cmsAdmin.username}</@p.td>
+<@p.text width="50" colspan="1" label="cmsUser.realname" name="realname" value=cmsAdmin.realname maxlength="100"/><@p.tr/>
+<@p.password width="50" colspan="1" label="cmsUser.password" id="password" name="password" maxlength="100" help="cmsUser.password.help"/>
+<@p.password width="50" colspan="1" label="cmsUser.pwdAgain" equalTo="#password" help="cmsUser.password.help"/><@p.tr/>
+<@p.text width="50" colspan="1" label="cmsUser.rank" name="rank" value=cmsAdmin.rank style="width:70px" required="true" class="required digits" maxlength="5" max=currRank help="cmsUser.rank.help"/>
+<@p.radio width="50" colspan="1" label="cmsUser.gender" name="gender" value=cmsAdmin.gender list={"true":"cmsUser.male","false":"cmsUser.female"}/><@p.tr/>
+<@p.radio width="50" colspan="1" label="cmsUser.disabled" name="disabled" value=cmsAdmin.disabled list={"true":"global.true","false":"global.false"} required="true"/>
+<@p.td width="50" colspan="1" label="cmsUser.loginCount">${cmsAdmin.loginCount}</@p.td><@p.tr/>
+<@p.td width="50" colspan="1" label="cmsUser.register">${cmsAdmin.registerTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsAdmin.registerIp}</@p.td>
+<@p.td width="50" colspan="1" label="cmsUser.lastLogin">${cmsAdmin.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsAdmin.lastLoginIp}</@p.td><@p.tr/>
+
+<@p.select width="50" colspan="2" label="角色" name="roleId" list=roleList value=cmsAdmin.role.id listKey="id" listValue="name" required="true"/><@p.tr/>
+<div style="clear:both"></div>
+<@p.td colspan="2">
+	<@p.hidden name="id" value=cmsAdmin.id/>
+	<@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>
+</@p.td>
+</@p.form>
+</div>
+</body>
+</html>

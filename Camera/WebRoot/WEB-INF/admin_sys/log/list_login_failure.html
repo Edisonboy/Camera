@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!-- 
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 4.5.5
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+<meta charset="utf-8" />
+<title>工作空间管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<#include "/admin_sys/head.html"/>
+
+<link
+	href="${base}/res/assets/global/plugins/datatables/datatables.min.css"
+	rel="stylesheet" type="text/css">
+<link
+	href="${base}/res/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css"
+	rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function optDelete() {
+	if(Pn.checkedCount('ids')<=0) {
+		alert("<@s.m 'error.checkRecord'/>");
+		return;
+	}
+	if(!confirm("<@s.m 'global.confirm.delete'/>")) {
+		return;
+	}
+	var f = getTableForm();
+	f.action="o_delete_operating.do";
+	f.submit();
+}
+</script>
+</head>
+<!-- END HEAD -->
+
+<body
+	class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-md">
+	<!-- BEGIN HEADER -->
+	<#include "/admin_sys/top.html"/>
+	<!-- END HEADER -->
+	<!-- BEGIN HEADER & CONTENT DIVIDER -->
+	<div class="clearfix"></div>
+	<!-- END HEADER & CONTENT DIVIDER -->
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		<!-- BEGIN SIDEBAR -->
+		<#assign tb_13=true />
+			<#assign tb_13_ul=true  />
+			<#assign tb_13_li_5=true />
+			<#assign tb_13_arrow=true />
+		<#include "/admin_sys/left.html"/>
+		<!-- END SIDEBAR -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div style="min-height:1022px" class="page-content">
+				<!-- page bar start -->
+				<div class="page-bar">
+
+					<ul class="page-breadcrumb">
+						<li><a href="v_list.do">登录失败日志 </a> <i class="fa fa-angle-right"></i>
+						</li>
+						<li><span>列表</span></li>
+					</ul>
+				</div>
+
+				<div class="row ">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE FORM PORTLET-->
+						<div class="portlet box red bordered">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>筛选
+								</div>
+								<div class="tools">
+									<a class="collapse" href="" data-original-title="" title="">
+									</a> <a class="remove" href="" data-original-title="" title="">
+									</a>
+								</div>
+							</div>
+							<div class="portlet-body">
+
+								<form action="v_list_login_failure.do" method="post" class="form-inline" >
+                                          	<div class="form-group">
+                                            <input type="text" class="form-control" placeholder="标题" name="queryTitle" value="${queryTitle!}">
+                                          </div>
+                                          	<div class="form-group">
+                                            <input type="text" class="form-control" placeholder="ip" name="queryIp" value="${queryIp!}">
+                                          </div>
+										 <input
+											class="btn red" type="submit" value="查询"/>
+								</form>
+
+
+
+							</div>
+						</div>
+						<!-- END SAMPLE FORM PORTLET-->
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<!-- BEGIN SAMPLE TABLE PORTLET-->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-comments"></i>登录失败日志 
+								</div>
+							</div>
+
+							<div class="portlet-body">
+								<form id="tableForm" method="post">
+									<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="queryTitle" value="${queryTitle!}"/>
+<input type="hidden" name="queryIp" value="${queryIp!}"/>
+									<div class="table-scrollable">
+										<table
+											class="table table-bordered table-hover dataTable table-checkable ">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>时间</th>
+													<th>IP</th>
+													<th>标题</th>
+													<th>内容	</th>
+													<th>操作选项</th>
+												</tr>
+											</thead>
+											<tbody>
+												<#list pagination.list as cmsLog>
+												<tr>
+													<td>${cmsLog.id}</td>
+													<td>${cmsLog.time?string("yyyy-MM-dd HH:mm:ss")}</td>
+													<td>${cmsLog.ip!}</td>
+													<td>${cmsLog.title}</td>
+
+													<td>${cmsLog.content!?html}</td>
+													<td>
+														<div class="btn-group">
+															<button class="btn btn-xs blue dropdown-toggle"
+																type="button" data-toggle="dropdown"
+																aria-expanded="false">
+																选择操作 <i class="fa fa-angle-down"></i>
+															</button>
+															<ul class="dropdown-menu pull-right" role="menu">
+																<@cms_perm url="/log/o_delete_login_failure.do">
+																<li><a href="o_delete_login_failure.do?ids=${cmsLog.id}&pageNo=${pageNo!}&queryTitle=${queryTitle!}&queryIp=${queryIp!}" onclick="if(!confirm('确定删除？')) {return false;}"> <i
+																		class="icon-docs"></i>删除</a></li></@cms_perm>
+
+
+															</ul>
+														</div></td>
+												</tr>
+
+												</#list>
+											</tbody>
+										</table>
+									</div>
+									<@p.pagination listAction="v_list_login_failure.do" value=pagination;cmsCargo,i,has_next>
+									</@p.pagination>
+								</form>
+							</div>
+
+
+						</div>
+						<!-- END SAMPLE TABLE PORTLET-->
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!-- BEGIN CONTENT -->
+
+		<#include "/common/bootAlert_message.html"/>
+		<!-- END CONTENT -->
+			
+	</div>
+	<!-- END CONTAINER -->
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dgut.member.entity">
+    <class name="MemberPhoto" table="member_photo">
+    	<id name="id" type="java.lang.Integer">
+            <column name="id" length="5" />
+            <generator class="native" />
+        </id>
+        <property name="userNo" type="java.lang.String" not-null="true">
+            <column name="userNo" length="255"  />
+        </property>
+        <property name="photo" type="java.lang.String" not-null="true">
+            <column name="photo" length="255"  />
+        </property>
+        <property name="maxUrl" type="java.lang.String" not-null="true">
+            <column name="maxUrl" length="255"  />
+        </property>
+        <property name="minUrl" type="java.lang.String" not-null="true">
+            <column name="minUrl" length="255"  />
+        </property>
+    
+        
+    </class>
+</hibernate-mapping>

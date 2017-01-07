@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/jeecms_sys/head.html"/>
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function optDelete() {
+	if(Pn.checkedCount('ids')<=0) {
+		alert("<@s.m 'error.checkRecord'/>");
+		return;
+	}
+	if(!confirm("<@s.m 'global.confirm.delete'/>")) {
+		return;
+	}
+	var f = getTableForm();
+	f.action="o_delete.do";
+	f.submit();
+}
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsAdminGlobal.function"/> - <@s.m "global.list"/></div>
+	<form class="ropt">
+		<input class="add" type="submit" value="<@s.m "global.add"/>" onclick="this.form.action='v_add.do';"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+
+<form action="v_list.do" method="post" style="padding-top:5px;">
+<div>
+用户名: <input type="text" name="queryUsername" value="${queryUsername!}" style="width:120px"/>
+角色 :<@p.select value=queryRoleId headerKey="" headerValue="-- 全部  --" list={"1":"管理员","2":"业务员","3":"装柜人员"}   name="queryRoleId" colspan="2" width="200"/>
+ <input class="query" type="submit" value="<@s.m "global.query"/>" />
+</div>
+</form>
+
+<form  method="post" id="tableForm">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<@p.table value=pagination;cmsUser,i,has_next><#rt/>
+	<@p.column title="<input type='checkbox' onclick='Pn.checkbox(\"ids\",this.checked)'/>" width="20">
+		<input type='checkbox' name='ids' value='${cmsUser.id}'/><#t/>
+	</@p.column><#t/>
+	<@p.column title="ID">${cmsUser.id}</@p.column><#t/>
+	<@p.column code="cmsUser.username"  align="center">
+		<div title="">${cmsUser.username}<#if cmsUser.realname??> (${cmsUser.realname})</#if></div>
+	</@p.column><#t/>
+	<@p.column title = "角色" align="center">${cmsUser.role.name}</@p.column><#t/>
+	<@p.column code="cmsUser.lastLogin" align="center">${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</@p.column><#t/>
+	<@p.column code="cmsUser.loginCountForList" align="right">${cmsUser.loginCount}</@p.column><#t/>
+	<@p.column code="cmsUser.disabled" align="center"><#if cmsUser.disabled><span style="color:red"><@s.m "global.true"/></span><#else><@s.m "global.false"/></#if></@p.column><#t/>
+	<@p.column code="global.operate" align="center">
+		<a href="v_edit.do?id=${cmsUser.id}&pageNo=${pageNo!}" class="pn-opt"><@s.m "global.edit"/></a> | <#rt/>
+		<a href="o_delete.do?ids=${cmsUser.id}&pageNo=${pageNo!}" onclick="if(!confirm('<@s.m "global.confirm.delete"/>')) {return false;}" class="pn-opt"><@s.m "global.delete"/></a><#t/>
+	</@p.column><#t/>
+</@p.table>
+<div style="margin-top:15px;"><input class="del-button" type="button" value="<@s.m "global.delete"/>" onclick="optDelete();"/></div>
+</form>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>
